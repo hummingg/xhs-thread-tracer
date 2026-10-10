@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "小红书对话链增强 (XHS Thread Tracer)",
+  "version": "0.1.0",
+  "description": "还原小红书评论区的完整对话链：在楼中楼里一键查看某条回复的完整上下文（从楼主到当前回复），支持 DOM 兜底与 API 双通道。",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://www.xiaohongshu.com/*"],
+      "js": ["hook_main.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.xiaohongshu.com/*"],
+      "js": ["core.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

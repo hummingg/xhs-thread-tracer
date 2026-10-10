@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>XHS Thread Tracer - Mock 页面（按 2026-10 真实小红书 DOM 结构模拟）</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", sans-serif; background: #fafafa; margin: 0; padding: 24px; }
+  .note-card { max-width: 640px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  h1 { font-size: 18px; }
+  .comments-container { margin-top: 16px; border-top: 1px solid #f0f0f0; padding-top: 16px; }
+  .parent-comment { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+  .comment-item { display: block; }
+  .comment-inner-container { display: flex; gap: 10px; }
+  .avatar img { width: 40px; height: 40px; border-radius: 50%; background: #eee; display: block; }
+  .right { flex: 1; }
+  .author .name { font-weight: 600; font-size: 13px; color: #333; text-decoration: none; }
+  .content { font-size: 14px; line-height: 1.6; color: #333; margin: 4px 0; }
+  .content .note-text { display: inline; }
+  .info .date { color: #bbb; font-size: 12px; }
+  .info .location { color: #bbb; font-size: 12px; margin-left: 6px; }
+  .list-container { margin-top: 8px; margin-left: 50px; padding-left: 12px; border-left: 2px solid #f0f0f0; }
+  .comment-item-sub .avatar img { width: 24px; height: 24px; }
+  .show-more { color: #ff2442; font-size: 13px; cursor: pointer; margin: 8px 0 0 50px; user-select: none; }
+  .hint { max-width: 640px; margin: 16px auto 0; color: #888; font-size: 13px; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="note-card">
+    <h1>（Mock）今天的穿搭分享</h1>
+    <div class="comments-container">
+
+      <div class="parent-comment">
+        <div id="comment-6ab8744d000000000d024438" class="comment-item">
+          <div class="comment-inner-container">
+            <div class="avatar"><img alt=""></div>
+            <div class="right">
+              <div class="author-wrapper"><div class="author"><a class="name" href="#">楼主A</a></div></div>
+              <div class="content"><span class="note-text">有人知道这个怎么配置吗？在线等</span></div>
+              <div class="info"><span class="date">09-27</span><span class="location">广西</span></div>
+            </div>
+          </div>
+          <div class="list-container">
+            <div id="comment-6ab87bc3000000000502973e" class="comment-item comment-item-sub">
+              <div class="comment-inner-container">
+                <div class="avatar"><img alt=""></div>
+                <div class="right">
+                  <div class="author-wrapper"><div class="author"><a class="name" href="#">B哥</a></div></div>
+                  <div class="content"><span class="note-text">我觉得是这样</span></div>
+                  <div class="info"><span class="date">09-27</span><span class="location">广东</span></div>
+                </div>
+              </div>
+            </div>
+            <div id="comment-6a8a622c000000001402f9da" class="comment-item comment-item-sub">
+              <div class="comment-inner-container">
+                <div class="avatar"><img alt=""></div>
+                <div class="right">
+                  <div class="author-wrapper"><div class="author"><a class="name" href="#">小C</a></div></div>
+                  <div class="content"><span class="note-text">回复 @B哥：具体哪里</span></div>
+                  <div class="info"><span class="date">09-27</span><span class="location">北京</span></div>
+                </div>
+              </div>
+            </div>
+            <div id="comment-6ab880000000000000000004" class="comment-item comment-item-sub">
+              <div class="comment-inner-container">
+                <div class="avatar"><img alt=""></div>
+                <div class="right">
+                  <div class="author-wrapper"><div class="author"><a class="name" href="#">B哥</a></div></div>
+                  <div class="content"><span class="note-text">回复 @小C：就是那里</span></div>
+                  <div class="info"><span class="date">09-27</span><span class="location">广东</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="parent-comment">
+        <div id="comment-6ab890000000000000000010" class="comment-item">
+          <div class="comment-inner-container">
+            <div class="avatar"><img alt=""></div>
+            <div class="right">
+              <div class="author-wrapper"><div class="author"><a class="name" href="#">路人E</a></div></div>
+              <div class="content"><span class="note-text">MARK 一下，等后续</span></div>
+              <div class="info"><span class="date">09-28</span><span class="location">浙江</span></div>
+            </div>
+          </div>
+          <div class="list-container">
+            <div id="comment-6ab890000000000000000011" class="comment-item comment-item-sub" style="display:none">
+              <div class="comment-inner-container">
+                <div class="avatar"><img alt=""></div>
+                <div class="right">
+                  <div class="author-wrapper"><div class="author"><a class="name" href="#">潜水F</a></div></div>
+                  <div class="content"><span class="note-text">同问，蹲一个答案</span></div>
+                  <div class="info"><span class="date">09-28</span><span class="location">湖南</span></div>
+                </div>
+              </div>
+            </div>
+            <div id="comment-6ab890000000000000000012" class="comment-item comment-item-sub" style="display:none">
+              <div class="comment-inner-container">
+                <div class="avatar"><img alt=""></div>
+                <div class="right">
+                  <div class="author-wrapper"><div class="author"><a class="name" href="#">路人E</a></div></div>
+                  <div class="content"><span class="note-text">回复 @潜水F：已经解决了，看楼上</span></div>
+                  <div class="info"><span class="date">09-29</span><span class="location">浙江</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="show-more">展开 2 条回复</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="hint">
+    本地 mock 页面，DOM 结构按 2026-10 真实小红书评论区校准（.comment-item / .comment-item-sub / a.name / .note-text，节点 id="comment-{真实评论id}"，展开按钮 div.show-more）。<br>
+    在浏览器直接打开：每条评论应出现「🔗对话链」按钮。无 API 数据时走启发式模式（依赖「回复 @」前缀）。
+    第二栋楼的「展开 2 条回复」可点击（模拟自动展开：点对话链按钮时插件会替你点它）。
+  </p>
+  <script src="../core.js"></script>
+  <script src="../content.js"></script>
+  <script>
+    // 模拟页面自身的「展开回复」行为：点 show-more 后显示隐藏的楼中楼
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.show-more');
+      if (!btn) return;
+      btn.parentElement.querySelectorAll('.comment-item-sub').forEach(el => { el.style.display = ''; });
+      btn.remove();
+    });
+  </script>
+</body>
+</html>

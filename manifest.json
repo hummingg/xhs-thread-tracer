@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
   "name": "小红书对话链增强 (XHS Thread Tracer)",
-  "version": "0.1.0",
-  "description": "还原小红书评论区的完整对话链：在楼中楼里一键查看某条回复的完整上下文（从楼主到当前回复），支持 DOM 兜底与 API 双通道。",
+  "version": "1.0.0",
+  "description": "还原小红书评论区的完整对话树：在楼中楼里一键查看某条回复的完整上下文（逐层展开、同层互斥、点击跳回原文），支持 DOM 兜底与 API 双通道。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [],
   "content_scripts": [
     {

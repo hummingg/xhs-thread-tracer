@@ -83,3 +83,61 @@ XHS Thread Tracer 就是为解决这一个问题而做的：还原任意一条�
 - 匹配域名仅 `https://www.xiaohongshu.com/*`，不作用于其他任何站点
 
 **唯一可能被视为越界的是配图缩略图**，但它只是评论正文的组成部分——一条带图评论若只显示文字，上下文依然缺失，因此它服务于同一目的且没有独立入口。
+
+---
+
+# Permission justification（权限理由，照抄）
+
+> 后台提示：*A permission is either one of a list of known strings... or a match pattern giving access to one or more hosts.*
+> 我们 `permissions` 数组为空，**唯一**被要求解释的是 `content_scripts.matches` 里那条 `https://www.xiaohongshu.com/*`。
+
+## 英文版（推荐，直接粘贴，约 950 字符）
+
+```
+Host access to https://www.xiaohongshu.com/* is required to inject a "Thread" button next to
+each comment on Xiaohongshu note pages. Clicking it opens a side panel that renders the full
+parent-child chain of that reply, which the site itself flattens and does not expose. The content
+script reads only (a) comment API responses the page has already received, observed read-only by
+wrapping window.fetch and XMLHttpRequest, and (b) comment text already rendered in the page DOM.
+Requests whose URL does not match the comment API path are passed through untouched and their
+bodies are never read. All parsing happens locally in the browser: nothing is collected, stored
+or transmitted anywhere, and the extension issues no network requests of its own. The permissions
+array is empty; no tabs, cookies, storage, webRequest or any other API permission is requested.
+A narrower path pattern was not adopted because the Xiaohongshu web app is a single-page app where
+note pages are served under more than one path shape (/explore/{id}, /discovery/item/{id})
+depending on the entry point, so restricting to one would silently break the others. activeTab
+is not sufficient because the feature must inject automatically at document_start on page load,
+without requiring the user to click the toolbar icon each time.
+```
+
+## 中文版（若后台为中文界面）
+
+```
+需要访问 https://www.xiaohongshu.com/* 以在小红书笔记页的每条评论旁注入「对话链」按钮；点击后在
+侧边面板展示该条回复的完整父子对话链（平台本身将楼中楼压平且不提供该功能）。脚本仅读取两类数据：
+(a) 页面自身已接收的评论接口响应——通过只读包装 window.fetch / XMLHttpRequest 观察得到；
+(b) 页面已渲染的评论文本。URL 不匹配评论接口的请求一律原样放行，从不读取其内容。全部解析在浏览器
+本地完成，不采集、不存储、不上传任何数据，也不发起任何额外网络请求。manifest 的 permissions 数组
+为空，未申请 tabs / cookies / storage / webRequest 等任何 API 权限。之所以未把路径收窄：小红书网页版是
+单页应用，笔记详情页在不同入口下路径形态不同（/explore/{id}、/discovery/item/{id}），限定其一会导致
+其他入口静默失效。activeTab 不足以满足需求：本功能需在页面加载时（document_start）自动注入，不要求
+用户每次点击工具栏图标。
+```
+
+## 为什么这么写（对应审核员的三个检查点）
+
+| 审核员在查什么 | 我们的回答 |
+|---|---|
+| 哪个用户可见功能需要这项权限？ | 「对话链」按钮 + 侧边面板，只在笔记页评论区出现 |
+| 拿到数据后怎么处理？ | 本地解析成树，不落盘、不外发；非评论接口连 body 都不读 |
+| 为什么不能更窄？ | SPA 多入口路径不唯一；activeTab 无法 document_start 自动注入 |
+
+**注意**：文案里「非评论接口的请求原样放行、从不读取内容」这句是对代码行为的如实陈述——
+`hook_main.js:38` 与 `:55` 处先 `isCommentApi(url)` 判断，不匹配就不调用 `forward()`，
+也不执行 `res.clone().json()`。如果以后改了这段逻辑，文案必须同步改，否则属于虚假陈述。
+
+## 可选加固（我建议不做）
+
+把 `matches` 收窄成 `https://www.xiaohongshu.com/explore/*` + `/discovery/item/*`，
+审核面会更干净。但代价是：小红书一旦调整笔记页 URL 结构，插件会静默失效且无提示。
+单一域名（非 `<all_urls>`）+ 空权限数组本就是最低告警档，为这点收益引入失效风险不划算。
